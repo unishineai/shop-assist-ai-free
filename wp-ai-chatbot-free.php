@@ -24,34 +24,33 @@ class WP_AI_ChatBot_Free {
     
     
     private function convert_api_url_for_container($api_url) {
-    
         if (preg_match('#^(https?://)?(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)#', $api_url, $matches)) {
             $parsed = parse_url($api_url);
             $scheme = $parsed['scheme'] ?? 'http';
-            $port = $parsed['port'] ?? 80;
-  
+            $port = $parsed['port'] ?? 80;   
+
             return $scheme . '://172.18.0.1:' . $port;
         }
         return $api_url;
     }
     
 
-public function __construct() {
-        add_action('admin_menu', [$this, 'add_admin_menu']);
-        add_action('wp_footer', [$this, 'add_chat_widget']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-        add_shortcode('wp_ai_chatbot', [$this, 'shortcode']);
-        register_activation_hook(__FILE__, [$this, 'activate']);
-        register_deactivation_hook(__FILE__, [$this, 'deactivate']);
-        
-        // AJAX handlers
-        add_action('wp_ajax_wp_ai_chatbot_check_api', [$this, 'check_api_connection']);
-        add_action('wp_ajax_nopriv_wp_ai_chatbot_check_api', [$this, 'check_api_connection']);
-        add_action('wp_ajax_wp_ai_chatbot_get_usage', [$this, 'get_usage_stats']);
-        add_action('wp_ajax_nopriv_wp_ai_chatbot_get_usage', [$this, 'get_usage_stats']);
-        
-        // Initialize configuration
-        $this->init_config();
+    public function __construct() {
+            add_action('admin_menu', [$this, 'add_admin_menu']);
+            add_action('wp_footer', [$this, 'add_chat_widget']);
+            add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+            add_shortcode('wp_ai_chatbot', [$this, 'shortcode']);
+            register_activation_hook(__FILE__, [$this, 'activate']);
+            register_deactivation_hook(__FILE__, [$this, 'deactivate']);
+            
+            // AJAX handlers
+            add_action('wp_ajax_wp_ai_chatbot_check_api', [$this, 'check_api_connection']);
+            add_action('wp_ajax_nopriv_wp_ai_chatbot_check_api', [$this, 'check_api_connection']);
+            add_action('wp_ajax_wp_ai_chatbot_get_usage', [$this, 'get_usage_stats']);
+            add_action('wp_ajax_nopriv_wp_ai_chatbot_get_usage', [$this, 'get_usage_stats']);
+            
+            // Initialize configuration
+            $this->init_config();
     }
     
     private function init_config() {
