@@ -10,7 +10,14 @@ Add an intelligent AI chatbot to your WordPress site in 1 minute. No coding. Get
 
 ## 🎬 Demo Video / 演示视频
 
-<video src="https://github.com/unishineai/wp-ai-chatbot/raw/master/wordpress-plugin-free/assets/images/Setup.mp4" width="800" controls></video>
+<div style="position: relative; max-width: 800px; margin: 20px auto; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+    <img src="assets/images/video-thumbnail.png" alt="Watch Demo" style="width: 100%; display: block;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: rgba(255, 122, 0, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; cursor: pointer;" onclick="document.getElementById('demoVideo').style.display='block'; this.style.display='none'; document.getElementById('demoVideo').play();">▶</div>
+    <video id="demoVideo" width="100%" controls style="display: none;">
+        <source src="https://github.com/unishineai/wp-ai-chatbot/raw/master/wordpress-plugin-free/assets/images/Setup.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 
 > ⏱️ Watch how to set up your AI chatbot in just 5 minutes!
 > ⏱️ 观看如何在5分钟内设置您的AI聊天机器人！
