@@ -100,12 +100,12 @@ Real-time usage statistics dashboard - track your Q/A pairs, words, and chats.
 ## 📝 Blog Posts / 博客文章
 
 ### English / 英文版
-- [How to Build a Zero-Config AI Chatbot for WordPress](https://chatbot.unishineai.dpdns.org/blog-post1/)
-- [Boost Your E-commerce Sales with AI-Powered Support](https://chatbot.unishineai.dpdns.org/blog-post2/)
+- [How to Build a Zero-Config AI Chatbot for WordPress](https://knowledge.unishineai.dpdns.org/blog-post1/)
+- [Boost Your E-commerce Sales with AI-Powered Support](https://knowledge.unishineai.dpdns.org/blog-post2/)
 
 ### Chinese / 中文版
-- [5分钟部署AI聊天机器人 - 零配置](https://chatbot.unishineai.dpdns.org/blog-post1-zh/)
-- [用AI驱动的支持提升电商转化率](https://chatbot.unishineai.dpdns.org/blog-post2-zh/)
+- [5分钟部署AI聊天机器人 - 零配置](https://knowledge.unishineai.dpdns.org/blog-post1-zh/)
+- [用AI驱动的支持提升电商转化率](https://knowledge.unishineai.dpdns.org/blog-post2-zh/)
 
 ## 🎯 Perfect For / 适合人群
 
