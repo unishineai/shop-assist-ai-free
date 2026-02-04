@@ -20,14 +20,14 @@ body {
 }
 
 /* Chat Window Container */
-#wp-ai-chatbot-container {
+#unishine-shop-assist-container {
     position: fixed;
     z-index: 9999;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Chat Button */
-#wp-ai-chatbot-button {
+#unishine-shop-assist-button {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -42,13 +42,13 @@ body {
     transition: all 0.3s;
 }
 
-#wp-ai-chatbot-button:hover {
+#unishine-shop-assist-button:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 /* Chat Window */
-.wp-ai-chatbot-window {
+.unishine-shop-assist-window {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -57,12 +57,12 @@ body {
     overflow: hidden;
 }
 
-#wp-ai-chatbot-window.active {
+#unishine-shop-assist-window.active {
     display: flex;
 }
 
 /* Header */
-.wp-ai-chatbot-header {
+.unishine-shop-assist-header {
     color: white;
     padding: 16px;
     display: flex;
@@ -70,12 +70,12 @@ body {
     align-items: center;
 }
 
-.wp-ai-chatbot-header h3 {
+.unishine-shop-assist-header h3 {
     margin: 0;
     font-size: 16px;
 }
 
-.wp-ai-chatbot-close {
+.unishine-shop-assist-close {
     background: none;
     border: none;
     color: white;
@@ -89,7 +89,7 @@ body {
 
 
 /* Tab 标签页样式 */
-.wp-ai-chatbot-tabs {
+.unishine-shop-assist-tabs {
     display: flex;
     background: #f8f9fa;
     border-bottom: 1px solid #e0e0e0;
@@ -141,7 +141,7 @@ body {
 }
 
 /* Chat Main Area */
-.wp-ai-chatbot-body {
+.unishine-shop-assist-body {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -151,7 +151,7 @@ body {
     box-sizing: border-box;
 }
 
-.wp-ai-chatbot-messages {
+.unishine-shop-assist-messages {
     flex: 1;
     overflow-y: scroll;
     padding: 16px 0 16px 16px;
@@ -159,7 +159,7 @@ body {
     background: #f8f9fa;
 }
 
-.wp-ai-chatbot-input-area {
+.unishine-shop-assist-input-area {
     padding: 12px 16px;
     background: white;
     border-top: 1px solid #e0e0e0;
@@ -168,7 +168,7 @@ body {
     flex-shrink: 0;
 }
 
-.wp-ai-chatbot-input {
+.unishine-shop-assist-input {
     flex: 1;
     padding: 10px 14px;
     border: 1px solid #d9d9d9;
@@ -177,7 +177,7 @@ body {
     outline: none;
 }
 
-.wp-ai-chatbot-send {
+.unishine-shop-assist-send {
     padding: 10px 20px;
     background: linear-gradient(135deg, #4DA6FF, #1a8cff);
     color: white;
@@ -372,35 +372,35 @@ body {
 }
 
 /* Chat Window Enhancements */
-.wp-ai-chatbot-window {
+.unishine-shop-assist-window {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.wp-ai-chatbot-window:not(.active) {
+.unishine-shop-assist-window:not(.active) {
     transform: translateY(20px);
     opacity: 0;
     pointer-events: none;
 }
 
-.wp-ai-chatbot-window.active {
+.unishine-shop-assist-window.active {
     transform: translateY(0);
     opacity: 1;
 }
 
 /* 消息布局样式 */
-.wp-ai-chatbot-message {
+.unishine-shop-assist-message {
     margin-bottom: 12px;
     display: flex;
     gap: 8px;
     animation: wp-ai-slide-in 0.3s ease-out;
 }
 
-.wp-ai-chatbot-message.user {
+.unishine-shop-assist-message.user {
     justify-content: flex-end !important;
 }
 
-.wp-ai-chatbot-message-content {
+.unishine-shop-assist-message-content {
     /*display: flex !important; */
     max-width: 70%;
     padding: 10px 14px;
@@ -408,12 +408,12 @@ body {
     word-wrap: break-word;
 }
 
-.wp-ai-chatbot-message.bot .wp-ai-chatbot-message-content {
+.unishine-shop-assist-message.bot .unishine-shop-assist-message-content {
     background: white;
     color: #333;
 }
 
-.wp-ai-chatbot-message.user .wp-ai-chatbot-message-content {
+.unishine-shop-assist-message.user .unishine-shop-assist-message-content {
     background: #4DA6FF;
     color: white;
 }
@@ -442,41 +442,41 @@ body {
 }
 
 /* Button Hover Effects */
-.wp-ai-chatbot-send {
+.unishine-shop-assist-send {
     transition: all 0.2s ease;
 }
 
-.wp-ai-chatbot-send:hover:not(:disabled) {
+.unishine-shop-assist-send:hover:not(:disabled) {
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(77, 166, 255, 0.4);
 }
 
-.wp-ai-chatbot-send:active:not(:disabled) {
+.unishine-shop-assist-send:active:not(:disabled) {
     transform: scale(0.95);
 }
 
 /* Input Focus Effects */
-.wp-ai-chatbot-input:focus {
+.unishine-shop-assist-input:focus {
     box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
     transition: box-shadow 0.2s ease;
 }
 
 /* Scrollbar Styling */
-.wp-ai-chatbot-messages::-webkit-scrollbar {
+.unishine-shop-assist-messages::-webkit-scrollbar {
     width: 4px;
 }
 
-.wp-ai-chatbot-messages::-webkit-scrollbar-track {
+.unishine-shop-assist-messages::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 3px;
 }
 
-.wp-ai-chatbot-messages::-webkit-scrollbar-thumb {
+.unishine-shop-assist-messages::-webkit-scrollbar-thumb {
     background: #4DA6FF;
     border-radius: 3px;
 }
 
-.wp-ai-chatbot-messages::-webkit-scrollbar-thumb:hover {
+.unishine-shop-assist-messages::-webkit-scrollbar-thumb:hover {
     background: #1a8cff;
 }
 
@@ -552,59 +552,59 @@ body {
 }
 
 /* Theme: Dark */
-.wp-ai-theme-dark .wp-ai-answer-card {
+.unishine-theme-dark .wp-ai-answer-card {
     background: #2a2a2a;
     border-color: #444;
     color: #e0e0e0;
 }
 
-.wp-ai-theme-dark .wp-ai-answer-card-content {
+.unishine-theme-dark .wp-ai-answer-card-content {
     color: #e0e0e0;
 }
 
-.wp-ai-theme-dark .wp-ai-answer-card.main-answer {
+.unishine-theme-dark .wp-ai-answer-card.main-answer {
     background: linear-gradient(135deg, #1a3a4a 0%, #2a4a5a 100%);
     border-color: #4DA6FF;
 }
 
 /* Theme: Green */
-.wp-ai-theme-green .wp-ai-answer-card:hover {
+.unishine-theme-green .wp-ai-answer-card:hover {
     border-color: #52c41a;
 }
 
-.wp-ai-theme-green .wp-ai-answer-card-number {
+.unishine-theme-green .wp-ai-answer-card-number {
     color: #52c41a;
 }
 
-.wp-ai-theme-green .wp-ai-answer-card.main-answer {
+.unishine-theme-green .wp-ai-answer-card.main-answer {
     background: linear-gradient(135deg, #f0fff4 0%, #f6ffed 100%);
     border-color: #52c41a;
 }
 
 /* Theme: Purple */
-.wp-ai-theme-purple .wp-ai-answer-card:hover {
+.unishine-theme-purple .wp-ai-answer-card:hover {
     border-color: #722ed1;
 }
 
-.wp-ai-theme-purple .wp-ai-answer-card-number {
+.unishine-theme-purple .wp-ai-answer-card-number {
     color: #722ed1;
 }
 
-.wp-ai-theme-purple .wp-ai-answer-card.main-answer {
+.unishine-theme-purple .wp-ai-answer-card.main-answer {
     background: linear-gradient(135deg, #f9f0ff 0%, #f9f0ff 100%);
     border-color: #722ed1;
 }
 
 /* Theme: Red */
-.wp-ai-theme-red .wp-ai-answer-card:hover {
+.unishine-theme-red .wp-ai-answer-card:hover {
     border-color: #f5222d;
 }
 
-.wp-ai-theme-red .wp-ai-answer-card-number {
+.unishine-theme-red .wp-ai-answer-card-number {
     color: #f5222d;
 }
 
-.wp-ai-theme-red .wp-ai-answer-card.main-answer {
+.unishine-theme-red .wp-ai-answer-card.main-answer {
     background: linear-gradient(135deg, #fff1f0 0%, #fff1f0 100%);
     border-color: #f5222d;
 }
@@ -622,123 +622,123 @@ body {
 
 /* Theme Styles */
 /* Blue Theme (Default) */
-.wp-ai-theme-blue .wp-ai-chatbot-header {
+.unishine-theme-blue .unishine-shop-assist-header {
     background: linear-gradient(135deg, #4DA6FF, #1a8cff);
 }
 
-.wp-ai-theme-blue .wp-ai-chatbot-send {
+.unishine-theme-blue .unishine-shop-assist-send {
     background: linear-gradient(135deg, #4DA6FF, #1a8cff);
 }
 
-.wp-ai-theme-blue .wp-ai-answer-card:hover {
+.unishine-theme-blue .wp-ai-answer-card:hover {
     border-color: #4DA6FF;
 }
 
 /* 绿色主题 */
-.wp-ai-theme-green .wp-ai-chatbot-header {
+.unishine-theme-green .unishine-shop-assist-header {
     background: linear-gradient(135deg, #52c41a, #389e0d);
 }
 
-.wp-ai-theme-green .wp-ai-chatbot-send {
+.unishine-theme-green .unishine-shop-assist-send {
     background: linear-gradient(135deg, #52c41a, #389e0d);
 }
 
-.wp-ai-theme-green .wp-ai-chatbot-user-message .wp-ai-chatbot-message-content {
+.unishine-theme-green .unishine-shop-assist-user-message .unishine-shop-assist-message-content {
     background: linear-gradient(135deg, #52c41a, #389e0d);
 }
 
-.wp-ai-theme-green .wp-ai-answer-card.wp-ai-main-answer {
+.unishine-theme-green .wp-ai-answer-card.wp-ai-main-answer {
     background: linear-gradient(135deg, #f6ffed 0%, #f0fff0 100%);
     border-color: #52c41a;
 }
 
-.wp-ai-theme-green .wp-ai-loading-dots span {
+.unishine-theme-green .wp-ai-loading-dots span {
     background: #52c41a;
 }
 
 /* 紫色主题 */
-.wp-ai-theme-purple .wp-ai-chatbot-header {
+.unishine-theme-purple .unishine-shop-assist-header {
     background: linear-gradient(135deg, #722ed1, #531dab);
 }
 
-.wp-ai-theme-purple .wp-ai-chatbot-send {
+.unishine-theme-purple .unishine-shop-assist-send {
     background: linear-gradient(135deg, #722ed1, #531dab);
 }
 
-.wp-ai-theme-purple .wp-ai-chatbot-user-message .wp-ai-chatbot-message-content {
+.unishine-theme-purple .unishine-shop-assist-user-message .unishine-shop-assist-message-content {
     background: linear-gradient(135deg, #722ed1, #531dab);
 }
 
-.wp-ai-theme-purple .wp-ai-answer-card.wp-ai-main-answer {
+.unishine-theme-purple .wp-ai-answer-card.wp-ai-main-answer {
     background: linear-gradient(135deg, #f9f0ff 0%, #f5f0ff 100%);
     border-color: #722ed1;
 }
 
-.wp-ai-theme-purple .wp-ai-loading-dots span {
+.unishine-theme-purple .wp-ai-loading-dots span {
     background: #722ed1;
 }
 
 /* 红色主题 */
-.wp-ai-theme-red .wp-ai-chatbot-header {
+.unishine-theme-red .unishine-shop-assist-header {
     background: linear-gradient(135deg, #f5222d, #cf1322);
 }
 
-.wp-ai-theme-red .wp-ai-chatbot-send {
+.unishine-theme-red .unishine-shop-assist-send {
     background: linear-gradient(135deg, #f5222d, #cf1322);
 }
 
-.wp-ai-theme-red .wp-ai-chatbot-user-message .wp-ai-chatbot-message-content {
+.unishine-theme-red .unishine-shop-assist-user-message .unishine-shop-assist-message-content {
     background: linear-gradient(135deg, #f5222d, #cf1322);
 }
 
-.wp-ai-theme-red .wp-ai-answer-card.wp-ai-main-answer {
+.unishine-theme-red .wp-ai-answer-card.wp-ai-main-answer {
     background: linear-gradient(135deg, #fff1f0 0%, #ffeded 100%);
     border-color: #f5222d;
 }
 
-.wp-ai-theme-red .wp-ai-loading-dots span {
+.unishine-theme-red .wp-ai-loading-dots span {
     background: #f5222d;
 }
 
 /* 深色主题 */
-.wp-ai-theme-dark .wp-ai-chatbot-window {
+.unishine-theme-dark .unishine-shop-assist-window {
     background: #1f1f1f;
 }
 
-.wp-ai-theme-dark .wp-ai-chatbot-header {
+.unishine-theme-dark .unishine-shop-assist-header {
     background: linear-gradient(135deg, #333, #1a1a1a);
 }
 
-.wp-ai-theme-dark .wp-ai-chatbot-messages {
+.unishine-theme-dark .unishine-shop-assist-messages {
     background: #2a2a2a;
 }
 
-.wp-ai-theme-dark .wp-ai-chatbot-message-content {
+.unishine-theme-dark .unishine-shop-assist-message-content {
     background: #3a3a3a;
     color: #e0e0e0;
 }
 
-.wp-ai-theme-dark .wp-ai-answer-card {
+.unishine-theme-dark .wp-ai-answer-card {
     background: #3a3a3a;
     border-color: #555;
     color: #e0e0e0;
 }
 
-.wp-ai-theme-dark .wp-ai-answer-card:hover {
+.unishine-theme-dark .wp-ai-answer-card:hover {
     border-color: #4DA6FF;
     background: #404040;
 }
 
-.wp-ai-theme-dark .wp-ai-answer-card-content {
+.unishine-theme-dark .wp-ai-answer-card-content {
     color: #e0e0e0;
 }
 
-.wp-ai-theme-dark .wp-ai-chatbot-input {
+.unishine-theme-dark .unishine-shop-assist-input {
     background: #2a2a2a;
     border-color: #444;
 }
 
-.wp-ai-theme-dark .wp-ai-chatbot-input input {
+.unishine-theme-dark .unishine-shop-assist-input input {
     background: #3a3a3a;
     color: #e0e0e0;
     border-color: #555;
@@ -746,13 +746,13 @@ body {
 
 /* 响应式优化 */
 @media (max-width: 480px) {
-    .wp-ai-chatbot-window {
+    .unishine-shop-assist-window {
         width: calc(100vw - 20px);
         right: 10px;
         bottom: 10px;
     }
     
-    .wp-ai-chatbot-btn {
+    .unishine-shop-assist-btn {
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -768,7 +768,7 @@ body {
 }
 
 /* Iframe 内部样式 */
-body.wp-ai-chatbot-window {
+body.unishine-shop-assist-window {
     position: relative !important;
     width: 380px !important;
     height: 600px !important;

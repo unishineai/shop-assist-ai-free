@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Shop Assist AI
+Plugin Name: UniShine Shop Assist — AI Chatbot
 Plugin URI: https://chatbot.unishineai.dpdns.org/
 Description: Add an intelligent AI chatbot to your WordPress site in 1 minute. Engage visitors, answer questions 24/7. Get your free API key from our SaaS platform.
-Version: 1.0.0
+Version: 1.0.1
 Author: UniShine AI
 Author URI: https://unishineai.dpdns.org/
 License: GPL v2 or later
@@ -36,6 +36,7 @@ class Shop_Assist_AI_Free {
 
     public function __construct() {
             add_action('admin_menu', [$this, 'add_admin_menu']);
+            add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
             add_action('wp_footer', [$this, 'add_chat_widget']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
             add_shortcode('shop_assist_ai', [$this, 'shortcode']);
@@ -75,11 +76,42 @@ public function init() {
             'Shop Assist AI',
             'Shop Assist AI',
             'manage_options',
-            'wp-ai-chatbot-free',
+            'unishine-shop-assist-free',
             [$this, 'admin_page'],
             'dashicons-format-chat',
             30
         );
+    }
+    
+    public function admin_enqueue_scripts($hook) {
+        // Only load on our admin page
+        if ('toplevel_page_unishine-shop-assist-free' !== $hook) {
+            return;
+        }
+        
+        // Load jQuery (built-in with WordPress)
+        wp_enqueue_script('jquery');
+        
+        // Load admin JavaScript
+        wp_enqueue_script(
+            'unishine-shop-assist-admin',
+            plugins_url('assets/js/unishine-shop-assist-admin.js', __FILE__),
+            ['jquery'],
+            $this->plugin_version,
+            true
+        );
+        
+        // Localize script with configuration
+        $api_url = get_option('shop_assist_ai_api_url', '');
+        $api_key = get_option('shop_assist_ai_api_key', '');
+        $saas_url = 'https://chatbot.unishineai.dpdns.org';
+        
+        wp_localize_script('unishine-shop-assist-admin', 'unishineShopAssist', array(
+            'apiUrl' => esc_js($api_url),
+            'apiKey' => esc_js($api_key),
+            'saasUrl' => esc_js($saas_url),
+            'nonce' => wp_create_nonce('shop_assist_ai_check_api')
+        ));
     }
     
     public function admin_page() {
@@ -278,130 +310,7 @@ public function init() {
                 </div>
             </div>
             
-            <script>
-            jQuery(document).ready(function($) {
-                var apiUrl = '<?php echo esc_js($api_url); ?>';
-                var apiKey = '<?php echo esc_js($api_key); ?>';
-                var saasUrl = '<?php echo esc_js($saas_url); ?>';
-                
-                // Load usage statistics
-                function loadUsageStats() {
-                    if (!apiUrl || !apiKey) {
-                        $('#usage-stats').html(
-                            '<div style="text-align: center; padding: 20px;"><p style="color: #ff7a00; font-size: 16px; margin: 0;">⚠️ Please configure API URL and API Key first</p></div>'
-                        );
-                        return;
-                    }
-                    
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: {
-                            action: 'shop_assist_ai_get_usage',
-                            api_url: apiUrl,
-                            api_key: apiKey
-                        },
-                        success: function(response) {
-                            console.log('Usage Stats Response:', response);
-                            if (response.success) {
-                                var stats = response.data;
-                                console.log('Stats Data:', stats);
-                                console.log('Documents:', stats.documents);
-                                console.log('Words:', stats.words);
-                                console.log('Messages:', stats.messages);
-                                var html = '<table style="width: 100%;">';
-                                
-                                // Q/A Pairs (Segments)
-                                var docsColor = stats.documents.percentage >= 100 ? '#ff4444' : '#ff7a00';
-                                html += '<tr><td style="padding: 12px 8px; width: 140px;"><strong style="color: #333; font-size: 15px;">📄 Q/A Pairs:</strong></td>';
-                                html += '<td style="padding: 12px 8px;"><span style="color: ' + docsColor + '; font-weight: 600; font-size: 16px;">' + stats.documents.used + ' / ' + stats.documents.max + '</span></td></tr>';
-                                html += '<tr><td colspan="2" style="padding: 0 8px 12px 8px;">';
-                                html += '<div style="background: #ffe0b2; height: 24px; border-radius: 12px; overflow: hidden;">';
-                                html += '<div style="background: ' + docsColor + '; height: 100%; width: ' + Math.min(stats.documents.percentage, 100) + '%; transition: width 0.5s ease;"></div>';
-                                html += '</div></td></tr>';
-                                
-                                // Total words
-                                html += '<tr><td style="padding: 12px 8px;"><strong style="color: #333; font-size: 15px;">📝 Total Words:</strong></td>';
-                                html += '<td style="padding: 12px 8px;"><span style="font-weight: 600; font-size: 16px; color: #333;">' + stats.words.used.toLocaleString() + ' / ' + stats.words.max.toLocaleString() + '</span></td></tr>';
-                                html += '<tr><td colspan="2" style="padding: 0 8px 12px 8px;">';
-                                html += '<div style="background: #ffe0b2; height: 24px; border-radius: 12px; overflow: hidden;">';
-                                var wordsColor = stats.words.percentage >= 100 ? '#ff4444' : '#ff7a00';
-                                html += '<div style="background: ' + wordsColor + '; height: 100%; width: ' + Math.min(stats.words.percentage, 100) + '%; transition: width 0.5s ease;"></div>';
-                                html += '</div></td></tr>';
-                                
-                                // Chats
-                                html += '<tr><td style="padding: 12px 8px;"><strong style="color: #333; font-size: 15px;">💬 Chats:</strong></td>';
-                                html += '<td style="padding: 12px 8px;"><span style="font-weight: 600; font-size: 16px; color: #333;">' + stats.messages.used + ' / ' + stats.messages.max + '</span></td></tr>';
-                                html += '<tr><td colspan="2" style="padding: 0 8px 12px 8px;">';
-                                html += '<div style="background: #ffe0b2; height: 24px; border-radius: 12px; overflow: hidden;">';
-                                html += '<div style="background: #ff7a00; height: 100%; width: ' + Math.min(stats.messages.percentage, 100) + '%; transition: width 0.5s ease;"></div>';
-                                html += '</div></td></tr>';
-                                
-                                html += '</table>';
-                                
-                                $('#usage-stats').html(html);
-                                
-                                // Show upgrade banner (if limits reached)
-                                if (stats.documents.remaining <= 0 || stats.words.remaining <= 0 || stats.messages.remaining <= 0) {
-                                    $('#upgrade-banner').fadeIn(300);
-                                }
-                            } else {
-                                $('#usage-stats').html(
-                                    '<div style="text-align: center; padding: 20px;"><p style="color: #dc3545; font-size: 16px; margin: 0;">❌ ' + response.data.message + '</p></div>'
-                                );
-                            }
-                        },
-                        error: function() {
-                            $('#usage-stats').html(
-                                '<div style="text-align: center; padding: 20px;"><p style="color: #dc3545; font-size: 16px; margin: 0;">❌ Loading failed, please check API configuration</p></div>'
-                            );
-                        }
-                    });
-                }
-                
-                // Test connection
-                function testConnection() {
-                    if (!apiUrl || !apiKey) {
-                        $('#connection-status').html(
-                            '<div style="text-align: center; padding: 20px;"><p style="color: #ff7a00; font-size: 16px; margin: 0;">⚠️ Please configure API URL and API Key first</p></div>'
-                        );
-                        return;
-                    }
-                    
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: {
-                            action: 'shop_assist_ai_check_api',
-                            api_url: apiUrl,
-                            api_key: apiKey
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('#connection-status').html(
-                                    '<div style="text-align: center; padding: 20px;"><p style="color: #28a745; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">✅ Connection successful!</p><p style="color: #666; font-size: 14px; margin: 0;">API URL: ' + apiUrl + '</p><p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Service status: Running normally</p></div>'
-                                );
-                                
-                                // Load statistics after successful connection
-                                loadUsageStats();
-                            } else {
-                                $('#connection-status').html(
-                                    '<div style="text-align: center; padding: 20px;"><p style="color: #dc3545; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">❌ Connection failed!</p><p style="color: #666; font-size: 14px; margin: 0;">' + response.data.message + '</p></div>'
-                                );
-                            }
-                        },
-                        error: function() {
-                            $('#connection-status').html(
-                                '<div style="text-align: center; padding: 20px;"><p style="color: #dc3545; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">❌ Connection failed!</p><p style="color: #666; font-size: 14px; margin: 0;">Please check if API configuration is correct</p></div>'
-                            );
-                        }
-                    });
-                }
-                
-                // Test connection on page load
-                testConnection();
-            });
-            </script>
+
             
             <div style="margin: 25px 0; padding: 25px; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); border-left: 4px solid #ff7a00;">
                 <h3 style="margin: 0 0 20px 0; font-size: 20px; color: #ff7a00; display: flex; align-items: center; gap: 10px;">
@@ -544,13 +453,52 @@ public function init() {
     }
     
     public function enqueue_scripts() {
-        // Load styles
+        // Load main styles
         wp_enqueue_style(
-            'wp-ai-chatbot',
+            'unishine-shop-assist',
             plugins_url('assets/css/wp-ai-chat-simple.css', __FILE__),
             [],
             $this->plugin_version
         );
+
+        // Load inline styles
+        wp_enqueue_style(
+            'unishine-shop-assist-inline',
+            plugins_url('assets/css/unishine-shop-assist-inline.css', __FILE__),
+            ['unishine-shop-assist'],
+            $this->plugin_version
+        );
+
+        // Add dynamic position styles
+        $options = get_option('unishine_shop_assist_options', array());
+        $theme = isset($options['theme']) ? esc_attr($options['theme']) : 'blue';
+        $position = isset($options['position']) ? esc_attr($options['position']) : 'bottom-right';
+        
+        $colors = array(
+            'blue' => '#1890ff',
+            'green' => '#52c41a',
+            'red' => '#f5222d',
+            'purple' => '#722ed1',
+            'dark' => '#1890ff'
+        );
+        $primary_color = $colors[$theme] ?? '#1890ff';
+        
+        $dynamic_styles = '';
+        if (strpos($position, 'right') !== false) {
+            $dynamic_styles .= '#unishine-shop-assist-container { right: 20px; }';
+        } else {
+            $dynamic_styles .= '#unishine-shop-assist-container { left: 20px; }';
+        }
+        
+        if (strpos($position, 'bottom') !== false) {
+            $dynamic_styles .= '#unishine-shop-assist-container { bottom: 20px; }';
+        } else {
+            $dynamic_styles .= '#unishine-shop-assist-container { top: 20px; }';
+        }
+        
+        $dynamic_styles .= '--primary-color: ' . esc_attr($primary_color) . ';';
+        
+        wp_add_inline_style('unishine-shop-assist-inline', $dynamic_styles);
 
         // Load jQuery (built-in with WordPress)
         wp_enqueue_script('jquery');
@@ -598,14 +546,14 @@ public function init() {
         
         ?>
         <style>
-            #wp-ai-chatbot-container {
+            #unishine-shop-assist-container {
                 position: fixed;
-                <?php echo strpos($position, 'right') !== false ? 'right: 20px;' : 'left: 20px;'; ?>
-                <?php echo strpos($position, 'bottom') !== false ? 'bottom: 20px;' : 'top: 20px;'; ?>
+                <?php echo esc_attr(strpos($position, 'right') !== false ? 'right: 20px;' : 'left: 20px;'); ?>
+                <?php echo esc_attr(strpos($position, 'bottom') !== false ? 'bottom: 20px;' : 'top: 20px;'); ?>
                 z-index: 9999;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             }
-            #wp-ai-chatbot-button {
+            #unishine-shop-assist-button {
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
@@ -620,15 +568,15 @@ public function init() {
                 font-size: 24px;
                 transition: all 0.3s;
             }
-            #wp-ai-chatbot-button:hover {
+            #unishine-shop-assist-button:hover {
                 transform: scale(1.1);
                 box-shadow: 0 6px 16px rgba(0,0,0,0.2);
             }
-            #wp-ai-chatbot-window {
+            #unishine-shop-assist-window {
                 display: none;
                 position: fixed;
-                <?php echo strpos($position, 'right') !== false ? 'right: 20px;' : 'left: 20px;'; ?>
-                <?php echo strpos($position, 'bottom') !== false ? 'bottom: 90px;' : 'top: 90px;'; ?>
+                <?php echo esc_attr(strpos($position, 'right') !== false ? 'right: 20px;' : 'left: 20px;'); ?>
+                <?php echo esc_attr(strpos($position, 'bottom') !== false ? 'bottom: 90px;' : 'top: 90px;'); ?>
                 width: 380px;
                 height: 600px;
                 background: white;
@@ -637,21 +585,21 @@ public function init() {
                 flex-direction: column;
                 overflow: hidden;
             }
-            #wp-ai-chatbot-window.active {
+            #unishine-shop-assist-window.active {
                 display: flex;
             }
-            .wp-ai-chatbot-header {
+            .unishine-shop-assist-header {
                 color: white;
                 padding: 16px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
-            .wp-ai-chatbot-header h3 {
+            .unishine-shop-assist-header h3 {
                 margin: 0;
                 font-size: 16px;
             }
-            .wp-ai-chatbot-close {
+            .unishine-shop-assist-close {
                 background: none;
                 border: none;
                 color: white;
@@ -661,41 +609,41 @@ public function init() {
                 width: 24px;
                 height: 24px;
             }
-            .wp-ai-chatbot-messages {
+            .unishine-shop-assist-messages {
                 flex: 1;
                 overflow-y: auto;
                 padding: 16px;
                 background: #f5f5f5;
             }
-            .wp-ai-chatbot-message {
+            .unishine-shop-assist-message {
                 margin-bottom: 12px;
                 display: flex;
                 gap: 8px;
             }
-            .wp-ai-chatbot-message.user {
+            .unishine-shop-assist-message.user {
                 justify-content: flex-end !important;
             }
-            .wp-ai-chatbot-message-content {
+            .unishine-shop-assist-message-content {
                 max-width: 70%;
                 padding: 10px 14px;
                 border-radius: 12px;
                 word-wrap: break-word;
             }
-            .wp-ai-chatbot-message.bot .wp-ai-chatbot-message-content {
+            .unishine-shop-assist-message.bot .unishine-shop-assist-message-content {
                 background: white;
                 color: #333;
             }
-            .wp-ai-chatbot-message.user .wp-ai-chatbot-message-content {
+            .unishine-shop-assist-message.user .unishine-shop-assist-message-content {
                 background: <?php echo esc_attr($primary_color); ?>;
                 color: white;
             }
-            .wp-ai-chatbot-input-area {
+            .unishine-shop-assist-input-area {
                 padding: 16px;
                 border-top: 1px solid #e8e8e8;
                 display: flex;
                 gap: 8px;
             }
-            .wp-ai-chatbot-input {
+            .unishine-shop-assist-input {
                 flex: 1;
                 padding: 10px 14px;
                 border: 1px solid #d9d9d9;
@@ -703,10 +651,10 @@ public function init() {
                 font-size: 14px;
                 outline: none;
             }
-            .wp-ai-chatbot-input:focus {
+            .unishine-shop-assist-input:focus {
                 border-color: <?php echo esc_attr($primary_color); ?>;
             }
-            .wp-ai-chatbot-send {
+            .unishine-shop-assist-send {
                 padding: 10px 20px;
                 background: <?php echo esc_attr($primary_color); ?>;
                 color: white;
@@ -715,26 +663,26 @@ public function init() {
                 cursor: pointer;
                 font-size: 14px;
             }
-            .wp-ai-chatbot-send:hover {
+            .unishine-shop-assist-send:hover {
                 opacity: 0.9;
             }
-            .wp-ai-chatbot-send:disabled {
+            .unishine-shop-assist-send:disabled {
                 opacity: 0.5;
                 cursor: not-allowed;
             }
         </style>
         
-        <div id="wp-ai-chatbot-container" class="wp-ai-theme-<?php echo esc_attr($theme); ?>">
-            <button id="wp-ai-chatbot-button" onclick="wpAiChatbotToggle()">💬</button>
+        <div id="unishine-shop-assist-container" class="unishine-theme-<?php echo esc_attr($theme); ?>">
+            <button id="unishine-shop-assist-button" onclick="wpAiChatbotToggle()">💬</button>
             
-            <div id="wp-ai-chatbot-window" class="wp-ai-theme-<?php echo esc_attr($theme); ?>">
-                <div class="wp-ai-chatbot-header">
+            <div id="unishine-shop-assist-window" class="unishine-theme-<?php echo esc_attr($theme); ?>">
+                <div class="unishine-shop-assist-header">
                     <h3><?php echo esc_html($title); ?></h3>
-                    <button class="wp-ai-chatbot-close" onclick="wpAiChatbotToggle()">×</button>
+                    <button class="unishine-shop-assist-close" onclick="wpAiChatbotToggle()">×</button>
                 </div>
                 
                 <!-- Tab Navigation -->
-                <div class="wp-ai-chatbot-tabs">
+                <div class="unishine-shop-assist-tabs">
                     <button class="wp-ai-tab-button active" data-tab="chat">
                         <span class="wp-ai-tab-icon">💬</span> Chat
                     </button>
@@ -748,19 +696,19 @@ public function init() {
                 
                 <!-- Chat Tab -->
                 <div id="chat-tab" class="wp-ai-tab-content active">
-                    <div class="wp-ai-chatbot-body">
-                        <div class="wp-ai-chatbot-messages" id="wp-ai-chatbot-messages">
-                            <div class="wp-ai-chatbot-message bot">
-                                <div class="wp-ai-chatbot-message-content">
+                    <div class="unishine-shop-assist-body">
+                        <div class="unishine-shop-assist-messages" id="unishine-shop-assist-messages">
+                            <div class="unishine-shop-assist-message bot">
+                                <div class="unishine-shop-assist-message-content">
                                     Hello! I'm your AI assistant. How can I help you today?
                                     <div class="wp-ai-message-time"><?php echo esc_html(gmdate("m/d/Y, g:i A")); ?></div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="wp-ai-chatbot-input-area">
-                            <input type="text" class="wp-ai-chatbot-input" id="wp-ai-chatbot-input" placeholder="Type your question...">
-                            <button class="wp-ai-chatbot-send">Send</button>
+                        <div class="unishine-shop-assist-input-area">
+                            <input type="text" class="unishine-shop-assist-input" id="unishine-shop-assist-input" placeholder="Type your question...">
+                            <button class="unishine-shop-assist-send">Send</button>
                         </div>
                     </div>
                 </div>
@@ -780,8 +728,8 @@ public function init() {
                 <div id="settings-tab" class="wp-ai-tab-content">
                     <div class="wp-ai-settings-content">
                         <div class="wp-ai-setting-item">
-                            <label for="wp-ai-theme-setting">🎨 Theme</label>
-                            <select id="wp-ai-theme-setting" class="wp-ai-select">
+                            <label for="unishine-theme-setting">🎨 Theme</label>
+                            <select id="unishine-theme-setting" class="wp-ai-select">
                                 <option value="blue">Blue</option>
                                 <option value="green">Green</option>
                                 <option value="purple">Purple</option>
@@ -821,7 +769,7 @@ public function init() {
     }
     
     public function shortcode() {
-        return '<div id="wp-ai-chatbot-shortcode-placeholder"></div>';
+        return '<div id="unishine-shop-assist-shortcode-placeholder"></div>';
     }
 }
 

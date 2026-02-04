@@ -66,7 +66,7 @@
             $item.on('click', function() {
                 // Switch to chat tab and fill question
                 jQuery('.wp-ai-tab-button[data-tab="chat"]').click();
-                const $input = jQuery('#wp-ai-chatbot-input');
+                const $input = jQuery('#unishine-shop-assist-input');
                 if ($input.length > 0) {
                     $input.val(item.question);
                 }

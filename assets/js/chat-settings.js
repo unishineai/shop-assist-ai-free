@@ -9,7 +9,7 @@
     function init() {
         // Load saved theme
         const savedTheme = localStorage.getItem('wpAiTheme') || 'blue';
-        const $themeSelect = jQuery('#wp-ai-theme-setting');
+        const $themeSelect = jQuery('#unishine-theme-setting');
         if ($themeSelect.length > 0) {
             $themeSelect.val(savedTheme);
         }
@@ -44,7 +44,7 @@
     // Bind event listeners
     function bindEventListeners() {
         // Theme switch
-        jQuery('#wp-ai-theme-setting').on('change', function() {
+        jQuery('#unishine-theme-setting').on('change', function() {
             const theme = jQuery(this).val();
             applyTheme(theme);
             localStorage.setItem('wpAiTheme', theme);
@@ -70,21 +70,21 @@
     
     // Apply theme
     function applyTheme(theme) {
-        const $container = jQuery('#wp-ai-chatbot-container');
-        const $window = jQuery('#wp-ai-chatbot-window');
+        const $container = jQuery('#unishine-shop-assist-container');
+        const $window = jQuery('#unishine-shop-assist-window');
         
         // Remove all theme classes
-        $container.removeClass('wp-ai-theme-blue wp-ai-theme-green wp-ai-theme-purple wp-ai-theme-red wp-ai-theme-dark');
-        $window.removeClass('wp-ai-theme-blue wp-ai-theme-green wp-ai-theme-purple wp-ai-theme-red wp-ai-theme-dark');
+        $container.removeClass('unishine-theme-blue unishine-theme-green unishine-theme-purple unishine-theme-red unishine-theme-dark');
+        $window.removeClass('unishine-theme-blue unishine-theme-green unishine-theme-purple unishine-theme-red unishine-theme-dark');
         
         // Add new theme class
-        $container.addClass('wp-ai-theme-' + theme);
-        $window.addClass('wp-ai-theme-' + theme);
+        $container.addClass('unishine-theme-' + theme);
+        $window.addClass('unishine-theme-' + theme);
     }
     
     // Apply position
     function applyPosition(position) {
-        const $container = jQuery('#wp-ai-chatbot-container');
+        const $container = jQuery('#unishine-shop-assist-container');
         
         // Reset all position styles
         $container.css({

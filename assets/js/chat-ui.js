@@ -29,20 +29,20 @@
     // Create iframe widget
     function createIframeWidget(config) {
         // Remove existing widget if any
-        jQuery('#wp-ai-chatbot-container').remove();
+        jQuery('#unishine-shop-assist-container').remove();
         
         const iframeUrl = config.iframeUrl;
         console.log('[AI ChatBot] Creating iframe widget with URL:', iframeUrl);
         
         const positionStyles = getPositionStyles(config.position);
-        const themeClass = `wp-ai-theme-${config.theme || 'blue'}`;
+        const themeClass = `unishine-theme-${config.theme || 'blue'}`;
         
         // Create widget HTML
         const widgetHtml = `
-            <div id="wp-ai-chatbot-container" class="${themeClass}" style="${positionStyles.container}">
-                <button id="wp-ai-chatbot-button" style="${positionStyles.button}">💬</button>
+            <div id="unishine-shop-assist-container" class="${themeClass}" style="${positionStyles.container}">
+                <button id="unishine-shop-assist-button" style="${positionStyles.button}">💬</button>
                 <iframe 
-                    id="wp-ai-chatbot-iframe"
+                    id="unishine-shop-assist-iframe"
                     src="${iframeUrl}"
                     style="${positionStyles.iframe}"
                     frameborder="0"
@@ -54,19 +54,19 @@
         jQuery('body').append(widgetHtml);
         
         console.log('[AI ChatBot] Widget HTML appended to body');
-        console.log('[AI ChatBot] Button element:', jQuery('#wp-ai-chatbot-button').length);
-        console.log('[AI ChatBot] Iframe element:', jQuery('#wp-ai-chatbot-iframe').length);
-        console.log('[AI ChatBot] Container element:', jQuery('#wp-ai-chatbot-container').length);
+        console.log('[AI ChatBot] Button element:', jQuery('#unishine-shop-assist-button').length);
+        console.log('[AI ChatBot] Iframe element:', jQuery('#unishine-shop-assist-iframe').length);
+        console.log('[AI ChatBot] Container element:', jQuery('#unishine-shop-assist-container').length);
         
         // 检查容器是否可见
-        const $container = jQuery('#wp-ai-chatbot-container');
+        const $container = jQuery('#unishine-shop-assist-container');
         console.log('[AI ChatBot] Container visible:', $container.is(':visible'));
         console.log('[AI ChatBot] Container display:', $container.css('display'));
         console.log('[AI ChatBot] Container position:', $container.css('position'));
         console.log('[AI ChatBot] Container z-index:', $container.css('z-index'));
         
         // 检查按钮是否可见
-        const $button = jQuery('#wp-ai-chatbot-button');
+        const $button = jQuery('#unishine-shop-assist-button');
         console.log('[AI ChatBot] Button visible:', $button.is(':visible'));
         console.log('[AI ChatBot] Button display:', $button.css('display'));
         console.log('[AI ChatBot] Button position:', $button.css('position'));
@@ -172,18 +172,18 @@
         });
         
         // Send button click
-        jQuery('.wp-ai-chatbot-send').on('click', function() {
+        jQuery('.unishine-shop-assist-send').on('click', function() {
             if (window.AIChatbotCore && window.AIChatbotCore.sendMessage) {
-                const message = jQuery('#wp-ai-chatbot-input').val().trim();
+                const message = jQuery('#unishine-shop-assist-input').val().trim();
                 window.AIChatbotCore.sendMessage(message).catch(console.error);
             }
         });
         
         // Enter key to send
-        jQuery('#wp-ai-chatbot-input').on('keypress', function(e) {
+        jQuery('#unishine-shop-assist-input').on('keypress', function(e) {
             if (e.which === 13) {
                 if (window.AIChatbotCore && window.AIChatbotCore.sendMessage) {
-                    const message = jQuery('#wp-ai-chatbot-input').val().trim();
+                    const message = jQuery('#unishine-shop-assist-input').val().trim();
                     window.AIChatbotCore.sendMessage(message).catch(console.error);
                 }
             }
@@ -193,7 +193,7 @@
     // Bind event listeners for Iframe Mode
     function bindIframeEventListeners() {
         // Toggle chat window
-        jQuery('#wp-ai-chatbot-button').on('click', toggleIframe);
+        jQuery('#unishine-shop-assist-button').on('click', toggleIframe);
         
         // Listen for messages from iframe
         window.addEventListener('message', function(event) {
@@ -209,8 +209,8 @@
                 toggleIframe();
             } else if (event.data.type === 'closeWidget') {
                 console.log('[AI ChatBot] Closing iframe');
-                const $iframe = jQuery('#wp-ai-chatbot-iframe');
-                const $button = jQuery('#wp-ai-chatbot-button');
+                const $iframe = jQuery('#unishine-shop-assist-iframe');
+                const $button = jQuery('#unishine-shop-assist-button');
                 if ($iframe.length > 0) {
                     $iframe.hide();
                 }
@@ -225,8 +225,8 @@
     // Toggle iframe visibility
     function toggleIframe() {
         console.log('[AI ChatBot] Toggle iframe clicked');
-        const $iframe = jQuery('#wp-ai-chatbot-iframe');
-        const $button = jQuery('#wp-ai-chatbot-button');
+        const $iframe = jQuery('#unishine-shop-assist-iframe');
+        const $button = jQuery('#unishine-shop-assist-button');
         console.log('[AI ChatBot] Iframe element:', $iframe.length);
         console.log('[AI ChatBot] Iframe visible before:', $iframe.is(':visible'));
         console.log('[AI ChatBot] Iframe display before:', $iframe.css('display'));
@@ -257,14 +257,14 @@
     
     // Toggle chat window (Direct Mode)
     function toggleWindow() {
-        const $window = jQuery('#wp-ai-chatbot-window');
-        const $button = jQuery('#wp-ai-chatbot-button');
+        const $window = jQuery('#unishine-shop-assist-window');
+        const $button = jQuery('#unishine-shop-assist-button');
         
         if ($window.length > 0) {
             $window.toggleClass('active');
             
             if ($window.hasClass('active')) {
-                const $input = jQuery('#wp-ai-chatbot-input');
+                const $input = jQuery('#unishine-shop-assist-input');
                 if ($input.length > 0) {
                     $input.focus();
                 }
@@ -283,9 +283,9 @@
     
     // Open chat window
     function open() {
-        const $window = jQuery('#wp-ai-chatbot-window');
-        const $iframe = jQuery('#wp-ai-chatbot-iframe');
-        const $button = jQuery('#wp-ai-chatbot-button');
+        const $window = jQuery('#unishine-shop-assist-window');
+        const $iframe = jQuery('#unishine-shop-assist-iframe');
+        const $button = jQuery('#unishine-shop-assist-button');
         
         if ($window.length > 0) {
             $window.addClass('active');
@@ -301,9 +301,9 @@
     
     // Close chat window
     function close() {
-        const $window = jQuery('#wp-ai-chatbot-window');
-        const $iframe = jQuery('#wp-ai-chatbot-iframe');
-        const $button = jQuery('#wp-ai-chatbot-button');
+        const $window = jQuery('#unishine-shop-assist-window');
+        const $iframe = jQuery('#unishine-shop-assist-iframe');
+        const $button = jQuery('#unishine-shop-assist-button');
         
         if ($window.length > 0) {
             $window.removeClass('active');

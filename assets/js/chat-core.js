@@ -32,10 +32,10 @@
         }
         
         // Fallback: try to find messagesContainer in current context
-        // Support both #chat-messages (SaaS) and #wp-ai-chatbot-messages (Plugin)
+        // Support both #chat-messages (SaaS) and #unishine-shop-assist-messages (Plugin)
         let messagesContainer = document.getElementById('chat-messages');
         if (!messagesContainer) {
-            messagesContainer = document.getElementById('wp-ai-chatbot-messages');
+            messagesContainer = document.getElementById('unishine-shop-assist-messages');
         }
         
         if (!messagesContainer) {
@@ -91,17 +91,17 @@
         }
         
         // Fallback: try to find messagesContainer in current context
-        // Support both #chat-messages (SaaS) and #wp-ai-chatbot-messages (Plugin)
+        // Support both #chat-messages (SaaS) and #unishine-shop-assist-messages (Plugin)
         let messagesContainer = document.getElementById('chat-messages');
         if (!messagesContainer) {
-            messagesContainer = document.getElementById('wp-ai-chatbot-messages');
+            messagesContainer = document.getElementById('unishine-shop-assist-messages');
         }
         
         console.log('[AI ChatBot] messagesContainer:', messagesContainer);
         
         if (!messagesContainer) {
             console.error('[AI ChatBot] messagesContainer is null! DOM elements:', 
-                document.querySelectorAll('#chat-messages, #wp-ai-chatbot-messages'));
+                document.querySelectorAll('#chat-messages, #unishine-shop-assist-messages'));
             return;
         }
         
@@ -109,7 +109,7 @@
         
         // Create message element
         const messageDiv = document.createElement('div');
-        messageDiv.className = `wp-ai-chatbot-message ${messageClass}`;
+        messageDiv.className = `unishine-shop-assist-message ${messageClass}`;
         
         // Add inline styles for user messages to ensure right alignment
         if (messageClass === 'user') {
@@ -121,7 +121,7 @@
         
         // Create content div
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'wp-ai-chatbot-message-content';
+        contentDiv.className = 'unishine-shop-assist-message-content';
         
         // Add message content
         const contentInnerDiv = document.createElement('div');
@@ -176,10 +176,10 @@
         }
         
         // Fallback: try to find messagesContainer in current context
-        // Support both #chat-messages (SaaS) and #wp-ai-chatbot-messages (Plugin)
+        // Support both #chat-messages (SaaS) and #unishine-shop-assist-messages (Plugin)
         let messagesContainer = document.getElementById('chat-messages');
         if (!messagesContainer) {
-            messagesContainer = document.getElementById('wp-ai-chatbot-messages');
+            messagesContainer = document.getElementById('unishine-shop-assist-messages');
         }
         
         if (!messagesContainer) {
@@ -189,11 +189,11 @@
 
         // Create message element
         const messageDiv = document.createElement('div');
-        messageDiv.className = 'wp-ai-chatbot-message bot';
+        messageDiv.className = 'unishine-shop-assist-message bot';
         
         // Create content div
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'wp-ai-chatbot-message-content';
+        contentDiv.className = 'unishine-shop-assist-message-content';
         
         // Create knowledge cards container
         const cardsContainer = document.createElement('div');
@@ -279,10 +279,10 @@
         }
         
         // Fallback: try to find messagesContainer in current context
-        // Support both #chat-messages (SaaS) and #wp-ai-chatbot-messages (Plugin)
+        // Support both #chat-messages (SaaS) and #unishine-shop-assist-messages (Plugin)
         let messagesContainer = document.getElementById('chat-messages');
         if (!messagesContainer) {
-            messagesContainer = document.getElementById('wp-ai-chatbot-messages');
+            messagesContainer = document.getElementById('unishine-shop-assist-messages');
         }
         
         if (!messagesContainer) {
@@ -291,8 +291,8 @@
         }
         
         const messageHtml = `
-            <div class="wp-ai-chatbot-message bot">
-                <div class="wp-ai-chatbot-message-content" id="wp-ai-typing-message"></div>
+            <div class="unishine-shop-assist-message bot">
+                <div class="unishine-shop-assist-message-content" id="wp-ai-typing-message"></div>
             </div>
         `;
         messagesContainer.insertAdjacentHTML('beforeend', messageHtml);
@@ -344,8 +344,8 @@
     async function sendMessage(message) {
         console.log('[AI ChatBot] sendMessage called with message:', message);
         const config = window.AIChatbotConfig || {};
-        const $input = jQuery('#wp-ai-chatbot-input');
-        const $sendBtn = jQuery('.wp-ai-chatbot-send');
+        const $input = jQuery('#unishine-shop-assist-input');
+        const $sendBtn = jQuery('.unishine-shop-assist-send');
         
         if (!message) {
             message = $input.val().trim();
